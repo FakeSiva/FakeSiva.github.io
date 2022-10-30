@@ -3,6 +3,7 @@
 }
 html {
   height: 100%;
+  
 }
 
 /* Nav Bar  */
@@ -21,20 +22,107 @@ html {
 /* Terminal */
 .page1 {
   height: 100%;
-  transition: 3s;
-  background-image: linear-gradient(
-    0deg,
-    hsl(0deg 37% 11%) 0%,
-    hsl(2deg 74% 7%) 9%,
-    hsl(0deg 0% 0%) 100%
-  );
 }
+
+@keyframes changek {
+  0% {
+    background-image: linear-gradient(
+      0deg,
+      hsl(109deg 33% 13%) 0%,
+      hsl(100deg 100% 5%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
+  }
+  63% {
+    background-image: linear-gradient(
+      0deg,
+      hsl(0deg 37% 11%) 0%,
+      hsl(2deg 74% 7%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
+  }
+  65% {
+    background-image: linear-gradient(
+      0deg,
+      hsl(109deg 33% 13%) 0%,
+      hsl(100deg 100% 5%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
+  }
+  70% {
+    background-image: linear-gradient(
+      0deg,
+      hsl(0deg 37% 11%) 0%,
+      hsl(2deg 74% 7%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
+  }
+  75% {
+    background-image: linear-gradient(
+      0deg,
+      hsl(109deg 33% 13%) 0%,
+      hsl(100deg 100% 5%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
+  }
+  80% {
+    background-image: linear-gradient(
+      0deg,
+      hsl(0deg 37% 11%) 0%,
+      hsl(2deg 74% 7%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
+  }
+  85% {
+    background-image: linear-gradient(
+      0deg,
+      hsl(109deg 33% 13%) 0%,
+      hsl(100deg 100% 5%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
+  }
+  90% {
+    background-image: linear-gradient(
+      0deg,
+      hsl(0deg 37% 11%) 0%,
+      hsl(2deg 74% 7%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
+  }
+  95% {
+    background-image: linear-gradient(
+      0deg,
+      hsl(109deg 33% 13%) 0%,
+      hsl(100deg 100% 5%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
+  }
+  100% {
+    background-image: linear-gradient(
+      0deg,
+      hsl(0deg 37% 11%) 0%,
+      hsl(2deg 74% 7%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
+  }
+ }
+ 
+
 body {
     height: 100%;
     color: white;
     margin: 0;
     font-family: 'Roboto', sans-serif;
     font-family: 'VT323', monospace;
+    animation-name: changek;
+    animation-duration: 7s;
+    animation-timing-function: linear;
+    background-image: linear-gradient(
+      0deg,
+      hsl(0deg 37% 11%) 0%,
+      hsl(2deg 74% 7%) 9%,
+      hsl(0deg 0% 0%) 100%
+    );
   }
   .a {
     position: absolute;
