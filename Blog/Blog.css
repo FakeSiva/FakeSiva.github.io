@@ -1,0 +1,191 @@
+:root {
+  --ml : 192px;
+}
+html {
+  height: 100%;
+}
+
+/* Nav Bar  */
+.navbar {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.navbar .navbar-brand {
+  font-size: 30px;
+}
+
+.navbar .collapse .nav-link {
+  font-size: 20px;
+}
+/* Nav Bar  */
+/* Terminal */
+.page1 {
+  height: 100%;
+  transition: 3s;
+  background-image: linear-gradient(
+    0deg,
+    hsl(0deg 37% 11%) 0%,
+    hsl(2deg 74% 7%) 9%,
+    hsl(0deg 0% 0%) 100%
+  );
+}
+body {
+    height: 100%;
+    color: white;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'VT323', monospace;
+  }
+  .a {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .a .er {
+    color: red;
+  }
+  .text {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .textclass {
+    color: rgb(0, 255, 34);
+  }
+  .a .root {
+    color: rgb(212, 211, 211);
+  }
+  .t1 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: type 2s steps(19, end), curser1 0.8s 2;
+    border-right: 8px solid transparent;
+    animation-delay: 0s;
+    transition: 0.3s;
+  }
+  
+  .t2 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: type 2s steps(30, end), curser 0.8s infinite;
+    border-right: 8px solid white;
+    animation-fill-mode: both;
+    animation-delay: 2s;
+  }
+  .t3 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: type 2s steps(19, end), curser 0.8s 3;
+    border-right: 8px solid white;
+    animation-fill-mode: both;
+    animation-delay: 2.5s;
+  }
+  .t4 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: type 2s steps(19, end), curser 0.8s 1;
+    border-right: 8px solid white;
+    animation-fill-mode: both;
+    animation-delay: 4.5s;
+  }
+  .t5 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: type 2s steps(19, end), curser 0.8s 1;
+    border-right: 8px solid white;
+    animation-fill-mode: both;
+    margin-left: var(--ml);
+    animation-delay: 5.5s;
+  }
+  .t6 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: type 2s steps(19, end), curser 0.8s 1;
+    border-right: 8px solid white;
+    animation-fill-mode: both;
+    margin-left: var(--ml);
+    animation-delay: 6.5s;
+  }
+  .t7 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: type 2s steps(19, end), curser 0.8s 1;
+    border-right: 8px solid white;
+    animation-fill-mode: both;
+    margin-left: var(--ml);
+    animation-delay: 7.5s;
+  }
+  .t8 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: type 2s steps(19, end), curser 0.8s 1;
+    border-right: 8px solid white;
+    animation-fill-mode: both;
+    margin-left: var(--ml);
+    animation-delay: 8.5s;
+  }
+  .t1:active {
+    border-right: 8px solid transparent;
+  }
+  .t3:active {
+    border-right: 8px solid transparent;
+  }
+  
+  @keyframes type {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  
+  @keyframes curser {
+    0% {
+      border-color: transparent;
+    }
+    50% {
+      border-color: white;
+    }
+    100% {
+      border-color: transparent;
+    }
+  }
+  
+  @keyframes curser1 {
+    0% {
+      border-color: transparent;
+    }
+    50% {
+      border-color: white;
+    }
+    100% {
+      border-color: transparent;
+    }
+  }
+  /* Terminal */
+  /* Footer / icon  */
+.footer {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.footer .icons li{
+  padding-left: 20px;
+}
+  /* icon  */
+
+  /* Page 2 */
