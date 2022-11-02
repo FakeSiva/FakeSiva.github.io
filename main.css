@@ -66,7 +66,7 @@ body {
     animation-delay: 0s;
     transition: 0.3s;
   }
-  
+
   .t2 {
     margin: 0;
     white-space: nowrap;
@@ -94,6 +94,7 @@ body {
     animation-fill-mode: both;
     animation-delay: 4.5s;
   }
+  
   .t5 {
     margin: 0;
     white-space: nowrap;
@@ -133,6 +134,16 @@ body {
     animation-fill-mode: both;
     margin-left: var(--ml);
     animation-delay: 8.5s;
+  }
+  .t9 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: type 2s steps(19, end), curser 0.8s 1;
+    border-right: 8px solid white;
+    animation-fill-mode: both;
+    margin-left: var(--ml);
+    animation-delay: 9.5s;
   }
   .t1:active {
     border-right: 8px solid transparent;
