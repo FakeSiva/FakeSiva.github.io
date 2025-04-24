@@ -66,7 +66,7 @@ body {
     animation-delay: 0s;
     transition: 0.3s;
   }
-
+  
   .t2 {
     margin: 0;
     white-space: nowrap;
@@ -94,7 +94,6 @@ body {
     animation-fill-mode: both;
     animation-delay: 4.5s;
   }
-  
   .t5 {
     margin: 0;
     white-space: nowrap;
@@ -134,16 +133,6 @@ body {
     animation-fill-mode: both;
     margin-left: var(--ml);
     animation-delay: 8.5s;
-  }
-  .t9 {
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: type 2s steps(19, end), curser 0.8s 1;
-    border-right: 8px solid white;
-    animation-fill-mode: both;
-    margin-left: var(--ml);
-    animation-delay: 9.5s;
   }
   .t1:active {
     border-right: 8px solid transparent;
@@ -198,3 +187,65 @@ body {
   /* icon  */
 
   /* Page 2 */
+@media (min-width: 768px) {
+  .footer {
+    font-size: 0.9rem;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .footer svg {
+    width: 24px;
+    height: 18px;
+  }
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.page1 {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(
+    0deg,
+    hsl(109deg 33% 13%) 0%,
+    hsl(100deg 100% 5%) 9%,
+    hsl(0deg 0% 0%) 100%
+  );
+}
+
+.a {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: none;
+  margin-bottom: 0;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+  /* icon  */
+
+  /* Page 2 */
+@media (min-width: 768px) {
+  .footer {
+    font-size: 0.9rem;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .footer svg {
+    width: 24px;
+    height: 18px;
+  }
+}
