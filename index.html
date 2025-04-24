@@ -4,82 +4,587 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fax0ke</title>
+    <title>Belal Essam | Reverse Engineer & Malware Analyst</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/all.min.css">
     <link rel="stylesheet" href="main.css">
-    <!-- Terminal Font and Normal Font (Combined, no duplicates) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@1,300&family=Roboto:wght@100;300;400;500&family=VT323&display=swap" rel="stylesheet">
-    <!-- End Fonts -->
-    <!-- Scroll -->
-
-    <!-- Scroll -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'VT323', monospace;
+            overflow: hidden;
+            transition: filter 0.3s;
+            background: #181a1b;
+        }
+        #particle-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .flip-container {
+            width: 420px;
+            max-width: 98vw;
+            height: 420px;
+            max-height: 98vh;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+            font-size: 1.1rem;
+            user-select: none;
+        }
+        .theme-toggle input[type="checkbox"] {
+            width: 36px;
+            height: 18px;
+            accent-color: #00ff22;
+            cursor: pointer;
+        }
+        .clock {
+            position: absolute;
+            top: 18px;
+            left: 22px;
+            z-index: 20;
+            font-size: 1.2rem;
+            color: #00ff22;
+            letter-spacing: 1px;
+            text-shadow: 0 0 6px #00ff22aa;
+            font-family: 'VT323', monospace;
+            background: rgba(30,32,34,0.7);
+            padding: 2px 10px;
+            border-radius: 8px;
+            border: 1px solid #00ff22;
+        }
+        .tv-antenna {
+            position: absolute;
+            top: -48px;
+            left: 50%;
+            width: 60px;
+            height: 40px;
+            z-index: 3;
+            pointer-events: none;
+            transform: translateX(-50%);
+        }
+        .tv-antenna .bar {
+            position: absolute;
+            bottom: 0;
+            width: 6px;
+            height: 40px;
+            background: #aaa;
+            border-radius: 3px;
+        }
+        .tv-antenna .bar.left {
+            left: 0;
+            transform: rotate(-18deg);
+        }
+        .tv-antenna .bar.right {
+            right: 0;
+            transform: rotate(18deg);
+        }
+        .tv-antenna .ball {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #00ff22;
+            border-radius: 50%;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 16px 4px #00ff22aa;
+        }
+        .tv-frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #222;
+            border: 10px solid #444;
+            border-radius: 32px 32px 40px 40px/28px 28px 48px 48px;
+            box-shadow: 0 10px 40px 0 rgba(0,0,0,0.5), 0 0 0 8px #111 inset;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .tv-stand {
+            position: absolute;
+            left: 50%;
+            bottom: -28px;
+            width: 80px;
+            height: 18px;
+            background: #333;
+            border-radius: 0 0 18px 18px;
+            transform: translateX(-50%);
+            box-shadow: 0 6px 12px 0 rgba(0,0,0,0.4);
+            z-index: 2;
+        }
+        #card-static {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+            border-radius: 22px 22px 30px 30px/18px 18px 36px 36px;
+        }
+        .front, .back {
+            position: absolute;
+            width: 92%;
+            height: 92%;
+            left: 4%;
+            top: 4%;
+            z-index: 4;
+            backface-visibility: hidden;
+            border-radius: 18px 18px 26px 26px/14px 14px 32px 32px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 32, 34, 0.95);
+            color: #fff;
+            font-size: 2rem;
+            font-family: 'VT323', monospace;
+            border: 2px solid #00ff22;
+            cursor: pointer;
+            user-select: none;
+            transition: filter 0.2s;
+        }
+        .front span {
+            color: #00ff22;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+        .warning-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff003c;
+            color: #fff;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            z-index: 10;
+            box-shadow: 0 4px 24px 0 rgba(255,0,60,0.25);
+            display: none;
+            pointer-events: none;
+            font-family: 'VT323', monospace;
+        }
+        .back {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2.5rem 2rem;
+            font-size: 1rem;
+            cursor: default;
+        }
+        .back h1 {
+            font-size: 3rem;
+            margin-bottom: 0.1rem;
+            margin-top: 0.4rem;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px #00ff22aa;
+        }
+        
+        .back .subtitle {
+            font-size: 1.4rem;
+            color: #ff003c;
+            margin-bottom: 0.1rem;
+            text-shadow: 0 0 12px #ff003c;
+        }
+        
+        .back .desc {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 320px;
+            margin: 0.4 auto 2rem;
+            padding: 0 1rem;
+            position: relative;
+        }
+        
+        .back .desc span {
+            color: #ff003c;
+            text-shadow: 0 0 8px #ff003c66;
+        }
+        
+        .back .socials {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.1rem; /* was 2rem, now slightly more */
+        }
+        
+        .back .socials a {
+            color: #fff;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 8px #ff003c;
+        }
+        
+        .back .socials a:hover {
+            color: #ff003c;
+            transform: translateY(-2px);
+        }
+        .reset-btn {
+            margin-top: 1.5rem;
+            background: #232526;
+            color: #ff003c;
+            border: 2px solid #ff003c;
+            border-radius: 8px;
+            padding: 0.5rem 1.2rem;
+            font-size: 1.1rem;
+            font-family: 'VT323', monospace;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .reset-btn:hover {
+            background: #ff003c;
+            color: #fff;
+        }
+        body.light {
+            background: #f7f7f7;
+        }
+        body.light .flip-container,
+        body.light .front,
+        body.light .back {
+            background: #fff !important;
+            color: #222 !important;
+            border-color: #00bfff !important;
+        }
+        body.light .back .desc span,
+        body.light .clock {
+            color: #00bfff !important;
+            border-color: #00bfff !important;
+            text-shadow: 0 0 6px #00bfff77;
+        }
+        body.light .tv-frame {
+            background: #eaeaea;
+            border-color: #bbb;
+            box-shadow: 0 10px 40px 0 rgba(0,0,0,0.12), 0 0 0 8px #eee inset;
+        }
+        body.light .tv-stand {
+            background: #bbb;
+        }
+        body.light .tv-antenna .bar {
+            background: #bbb;
+        }
+        body.light .tv-antenna .ball {
+            background: #00bfff;
+            box-shadow: 0 0 16px 4px #00bfff77;
+        }
+        body.light .back .socials a {
+            color: #222;
+        }
+        body.light .back .socials a:hover {
+            color: #00bfff;
+        }
+        body.light #card-static {
+            border-color: #00bfff;
+        }
+        body.light .warning-message {
+            background: #00bfff;
+            color: #fff;
+        }
+        @media (max-width: 500px) {
+            .flip-container {
+                height: 370px;
+            }
+            .back h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="page1">
-        <!-- Nav  -->
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top shadow-lg ">
-                <div class="container">
-                <a class="navbar-brand position-absolute top-50 start-50 translate-middle mt-1" href="#">C:\Fakesiva\></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                        <li class="nav-item">
-                            <a class="nav-link mb-lg-4 active" aria-current="page" href="index.html">Terminal</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Blog/Blog-page.html">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="CV/CV-page.html">CV</a>
-                        </li>
-                    </ul>
-                </div>
-                </div>
-            </nav>
-        <!-- Nav  -->
-        <!-- Hello World -->
-
-        <!-- Hello World -->
-        <!-- Terminal -->
-            <div class="a" style="margin-bottom: 0;">
-                <h1 class='text t1'><span class="root">C:\Fax0ke\></span> <span class='textclass'>whoami</span></h1>
-                <h1 class='text t2'><span class="root">C:\Fax0ke\></span> desktop-ad0qqnc\Belal Essam</h1>
-                <h1 class='text t3'><span class="root">C:\Fax0ke\></span> <span class='textclass'>more "C:\Fax0ke\system32\private\Skills.txt"</span></h1>
-                <h1 class='text t4'><span class="root">C:\Fax0ke\></span> -Reverse Engineer.</h1>
-                <h1 class='text t5'>-Malware Analyst.</h1>
-                <h1 class='text t7'>-Assembly & Disassembly Specialist.</h1>
-                <h1 class='text t8'>-C/C++ & Python for RE.</h1>
+    <audio id="bg-noise" src="noise.mp3" autoplay loop></audio>
+    <canvas id="particle-bg"></canvas>
+    <div class="flip-container" id="flip-container">
+        <!-- Removed theme toggle and clock -->
+        <div class="tv-antenna">
+            <div class="bar left"></div>
+            <div class="bar right"></div>
+            <div class="ball"></div>
+        </div>
+        <div class="tv-frame"></div>
+        <canvas id="card-static" width="370" height="350"></canvas>
+        <div class="front" id="card-front">
+            <span>Don't click on me :(</span>
+        </div>
+        <div class="back" id="card-back" style="display:none;">
+            <h1>Belal Essam</h1>
+            <div class="subtitle">Reverse Engineer & Malware Analyst</div>
+            <div class="desc" id="typewriter-desc">
+                Passionate about dissecting binaries, uncovering malware secrets, and building tools for the RE community.<br>
+                <span>C/C++</span>, <span>Python</span>, <span>Assembly</span>
             </div>
-        <!-- Terminal -->
-        <!-- Footer  -->
-        <div class="footer container fixed-bottom shadow-lg p-3 mb-5 rounded d-none d-md-block">
-            <footer class="d-flex flex-wrap justify-content-end align-items-center py-2 my-2 border-top" style="font-size: 0.9rem;">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-2 me-2 mb-md-0 text-muted text-decoration-none lh-1" aria-label="Home">
-                <svg class="bi" width="24" height="18" aria-hidden="true"><use xlink:href="#bootstrap"/></svg>
+            <div class="socials">
+                <a href="https://twitter.com/Sivaa_" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="3 3 27 26" fill="currentColor">
+                        <path d="M17.53 3H21L13.62 10.99L22 21H15.68L10.92 15.5L5.6 21H2.18L9.97 12.56L2 3H8.48L12.78 8.04L17.53 3ZM16.32 19H18.13L7.78 4.98H5.84L16.32 19Z"/>
+                    </svg>
                 </a>
-                <span class="mb-2 mb-md-0 text-muted position-absolute top-50 start-50 translate-middle">&copy;2022 FakeSiva, Inc</span>
+                <a href="https://github.com/FakeSiva" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
             </div>
-            <ul class="icons nav col-md-4 justify-content-end list-unstyled d-flex">
-                <li><a href="https://twitter.com/Sivaa_" aria-label="Twitter"><i class="text-secondary fa-brands fa-twitter"></i></a></li>
-                <li><a href="https://github.com/FakeSiva" aria-label="GitHub"><i class="text-secondary fa-brands fa-github"></i></a></li>
-            </ul>
-            </footer>
+        </div>
+        <div class="tv-stand"></div>
+        <div class="warning-message" id="warning-message">
+            For real ?
         </div>
     </div>
-    <!-- Footer  -->
-        <script src="js/all.min.js"></script>
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <!-- Scroll  -->
+    <script src="js/all.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Particle Network Background
+    const particleBg = document.getElementById('particle-bg');
+    const bgCtx = particleBg.getContext('2d');
+    let bgParticles = [];
+    const BG_PARTICLE_COUNT = 60;
+    const BG_LINK_DIST = 120;
+    const BG_PARTICLE_RADIUS = 2.2;
 
-        <!-- Scroll  -->
-<!-- Page 2  -->
+    function resizeBgParticles() {
+        particleBg.width = window.innerWidth;
+        particleBg.height = window.innerHeight;
+    }
 
-<!-- Page 2  -->
+    function initBgParticles() {
+        bgParticles = [];
+        for (let i = 0; i < BG_PARTICLE_COUNT; i++) {
+            bgParticles.push({
+                x: Math.random() * particleBg.width,
+                y: Math.random() * particleBg.height,
+                vx: (Math.random() - 0.5) * 1.2, // Increased speed
+                vy: (Math.random() - 0.5) * 1.2  // Increased speed
+            });
+        }
+    }
+
+    function drawBgParticles() {
+        bgCtx.clearRect(0, 0, particleBg.width, particleBg.height);
+        // Draw lines
+        for (let i = 0; i < bgParticles.length; i++) {
+            for (let j = i + 1; j < bgParticles.length; j++) {
+                const dx = bgParticles[i].x - bgParticles[j].x;
+                const dy = bgParticles[i].y - bgParticles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < BG_LINK_DIST) {
+                    bgCtx.strokeStyle = "rgba(0,255,34," + (1 - dist / BG_LINK_DIST) * 0.35 + ")";
+                    bgCtx.lineWidth = 1;
+                    bgCtx.beginPath();
+                    bgCtx.moveTo(bgParticles[i].x, bgParticles[i].y);
+                    bgCtx.lineTo(bgParticles[j].x, bgParticles[j].y);
+                    bgCtx.stroke();
+                }
+            }
+        }
+        // Draw particles
+        for (let i = 0; i < bgParticles.length; i++) {
+            bgCtx.beginPath();
+            bgCtx.arc(bgParticles[i].x, bgParticles[i].y, BG_PARTICLE_RADIUS, 0, 2 * Math.PI);
+            bgCtx.fillStyle = "#00ff22";
+            bgCtx.shadowColor = "#00ff22";
+            bgCtx.shadowBlur = 8;
+            bgCtx.fill();
+            bgCtx.shadowBlur = 0;
+        }
+    }
+
+    // --- Card Flip Logic ---
+    const flipContainer = document.getElementById('flip-container');
+    const cardFront = document.getElementById('card-front');
+    const cardBack = document.getElementById('card-back');
+    const warning = document.getElementById('warning-message');
+    let flipped = false;
+
+    flipContainer.addEventListener('click', function (e) {
+        // Prevent flipping if warning is visible
+        if (warning && warning.style.display === 'block') return;
+        flipped = !flipped;
+        if (flipped) {
+            cardFront.style.display = 'none';
+            cardBack.style.display = 'flex';
+        } else {
+            cardFront.style.display = 'flex';
+            cardBack.style.display = 'none';
+        }
+    });
+
+    // --- Particle Mouse Interaction ---
+    let mouse = { x: null, y: null };
+    // Track mouse movement delta for global offset
+    let lastMouse = { x: null, y: null };
+    let mouseDelta = { x: 0, y: 0 };
+    particleBg.addEventListener('mousemove', function (e) {
+        if (lastMouse.x !== null && lastMouse.y !== null) {
+            mouseDelta.x = (e.clientX - lastMouse.x) * 0.12; // Adjust multiplier for effect
+            mouseDelta.y = (e.clientY - lastMouse.y) * 0.12;
+        }
+        lastMouse.x = e.clientX;
+        lastMouse.y = e.clientY;
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+    particleBg.addEventListener('mouseleave', function () {
+        mouse.x = null;
+        mouse.y = null;
+        lastMouse.x = null;
+        lastMouse.y = null;
+        mouseDelta.x = 0;
+        mouseDelta.y = 0;
+    });
+
+    function updateBgParticles() {
+        for (let i = 0; i < bgParticles.length; i++) {
+            // Attraction to mouse
+            if (mouse.x !== null && mouse.y !== null) {
+                const dx = mouse.x - bgParticles[i].x;
+                const dy = mouse.y - bgParticles[i].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 180) { // Slightly larger radius
+                    // Move particle more strongly toward mouse
+                    bgParticles[i].vx += dx / dist * 0.07; // Increased attraction
+                    bgParticles[i].vy += dy / dist * 0.07;
+                }
+                // Add global offset for "follow" effect
+                bgParticles[i].x += mouseDelta.x * 0.2;
+                bgParticles[i].y += mouseDelta.y * 0.2;
+            }
+            // Damping for velocity
+            bgParticles[i].vx *= 0.97;
+            bgParticles[i].vy *= 0.97;
+            bgParticles[i].x += bgParticles[i].vx;
+            bgParticles[i].y += bgParticles[i].vy;
+            // Bounce off edges
+            if (bgParticles[i].x < BG_PARTICLE_RADIUS || bgParticles[i].x > particleBg.width - BG_PARTICLE_RADIUS) {
+                bgParticles[i].vx *= -1;
+            }
+            if (bgParticles[i].y < BG_PARTICLE_RADIUS || bgParticles[i].y > particleBg.height - BG_PARTICLE_RADIUS) {
+                bgParticles[i].vy *= -1;
+            }
+        }
+    }
+
+    function animateBgParticles() {
+        updateBgParticles();
+        drawBgParticles();
+        requestAnimationFrame(animateBgParticles);
+    }
+
+    window.addEventListener('resize', () => {
+        resizeBgParticles();
+        initBgParticles();
+    });
+    resizeBgParticles();
+    initBgParticles();
+    animateBgParticles();
+
+    // TV Static on Card
+    const cardStatic = document.getElementById('card-static');
+    const cardCtx = cardStatic.getContext('2d');
+    function resizeCardStatic() {
+        const rect = document.getElementById('flip-container').getBoundingClientRect();
+        cardStatic.width = rect.width;
+        cardStatic.height = rect.height;
+    }
+    function drawCardStatic() {
+        const w = cardStatic.width;
+        const h = cardStatic.height;
+        const imgData = cardCtx.createImageData(w, h);
+        for (let i = 0; i < imgData.data.length; i += 4) {
+            const shade = Math.random() * 255;
+            imgData.data[i] = shade;
+            imgData.data[i + 1] = shade;
+            imgData.data[i + 2] = shade;
+            imgData.data[i + 3] = 35 + Math.random() * 40;
+        }
+        cardCtx.putImageData(imgData, 0, 0);
+        requestAnimationFrame(drawCardStatic);
+    }
+    window.addEventListener('resize', resizeCardStatic);
+    resizeCardStatic();
+    drawCardStatic();
+
+    // Theme Toggle (Dark by default)
+    const themeSwitch = document.getElementById('theme-switch');
+    function setTheme(dark) {
+        if (dark) {
+            document.body.classList.remove('light');
+            themeSwitch.checked = false;
+        } else {
+            document.body.classList.add('light');
+            themeSwitch.checked = true;
+        }
+    }
+    // Default to dark
+    setTheme(true);
+    themeSwitch.addEventListener('change', function() {
+        setTheme(!this.checked);
+    });
+
+    // Live Clock
+    function updateClock() {
+        const clock = document.getElementById('live-clock');
+        const now = new Date();
+        // Format: HH:MM:SS
+        const h = String(now.getHours()).padStart(2, '0');
+        const m = String(now.getMinutes()).padStart(2, '0');
+        const s = String(now.getSeconds()).padStart(2, '0');
+        clock.textContent = h + ':' + m + ':' + s;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+    // Remove theme toggle and clock JS
+    // Remove typewriter effect, just set the description directly
+    document.getElementById('typewriter-desc').innerHTML =
+        "Passionate about dissecting binaries, uncovering malware secrets, and building tools for the RE community.<br><span>C/C++</span>, <span>Python</span>, <span>Assembly</span>";
+    
+    // Optionally, ensure background noise plays (some browsers require user interaction)
+    window.addEventListener('click', function playNoiseOnce() {
+        const audio = document.getElementById('bg-noise');
+        if (audio && audio.paused) {
+            audio.play();
+        }
+        window.removeEventListener('click', playNoiseOnce);
+    });
+
+    // Live Clock
+    function updateClock() {
+        const clock = document.getElementById('live-clock');
+        const now = new Date();
+        // Format: HH:MM:SS
+        const h = String(now.getHours()).padStart(2, '0');
+        const m = String(now.getMinutes()).padStart(2, '0');
+        const s = String(now.getSeconds()).padStart(2, '0');
+        clock.textContent = h + ':' + m + ':' + s;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+    </script>
 </body>
 </html>
